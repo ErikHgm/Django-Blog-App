@@ -8,7 +8,7 @@ STATUS = ((0, 'DRAFT'), (1, 'PUBSLISHED'))
 class Post(models.Model):
     title = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog posts')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     updated_on = models.DateTimeField(auto_now=True)
     content = models.TextField()
     featured_image = CloudinaryField('image', default='placeholder')
@@ -18,7 +18,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name="blog_likes", blank=True)
 
     class Meta:
-        ordering = [-created_on]
+        ordering = ['-created_on']
 
     def __str__(self):
         return self.title
@@ -35,7 +35,7 @@ class Comment(models.Model):
     approved = models.BooleanField(default=False)
 
     class Meta:
-            ordering = [created_on]
+            ordering = ['created_on']
 
-        def __str__(self):
-            return f"Comment: {self.body} by {self.name}"
+    def __str__(self):
+        return f"Comment: {self.body} by {self.name}"
